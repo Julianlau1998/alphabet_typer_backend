@@ -1,0 +1,6 @@
+#json files
+./json_files/lists.json
+./json_files/notes.json
+./json_files/users.json
+
+.env
