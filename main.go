@@ -27,7 +27,7 @@ func CORSMiddlewareWrapper(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 		dynamicCORSConfig := middleware.CORSConfig{
 			AllowOrigins: []string{"https://alphabet-typer.com"},
-			AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept}
+			AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 			AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodOptions},
 		}
 		CORSMiddleware := middleware.CORSWithConfig(dynamicCORSConfig)
