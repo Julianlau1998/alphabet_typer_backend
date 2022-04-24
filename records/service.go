@@ -15,8 +15,8 @@ func NewService(recordRepository Repository) Service {
 	return Service{recordRepository: recordRepository}
 }
 
-func (s *Service) GetAll(limit int64, filter int64) ([]models.Record, error) {
-	notes, err := s.recordRepository.GetAll(limit, filter)
+func (s *Service) GetAll(limit int64, filter int64, offset int64) ([]models.Record, error) {
+	notes, err := s.recordRepository.GetAll(limit, filter, offset)
 	if err != nil {
 		log.Warnf("RecordsService.GetAll(): Could not get Records: %s", err)
 		return notes, err

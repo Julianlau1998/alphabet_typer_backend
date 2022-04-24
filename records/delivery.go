@@ -18,8 +18,9 @@ func NewDelivery(recordService Service) Delivery {
 
 func (d *Delivery) GetAll(c echo.Context) error {
 	limit, _ := strconv.ParseInt(c.QueryParam("limit"), 0, 32)
+	offset, _ := strconv.ParseInt(c.QueryParam("offset"), 0, 32)
 	filter, _ := strconv.ParseInt(c.QueryParam("filter"), 0, 32)
-	records, err := d.recordService.GetAll(limit, filter)
+	records, err := d.recordService.GetAll(limit, filter, offset)
 	if err != nil {
 		return c.String(http.StatusInternalServerError, err.Error())
 	}

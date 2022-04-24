@@ -16,7 +16,7 @@ func NewRepository(dbClient *sql.DB) Repository {
 	return Repository{dbClient: dbClient}
 }
 
-func (r *Repository) GetAll(limit int64, filter int64) ([]models.Record, error) {
+func (r *Repository) GetAll(limit int64, filter int64, offset int64) ([]models.Record, error) {
 	var notes []models.Record
 	query := `SELECT * FROM records`
 	filterString := ""
@@ -29,22 +29,22 @@ func (r *Repository) GetAll(limit int64, filter int64) ([]models.Record, error) 
 	} else if filter == 365 {
 		filterString = ` WHERE createdDate >= current_date at time zone 'UTC' - interval '365 days'`
 	}
-	orderString := ` ORDER BY record ASC LIMIT $1`
+	orderString := ` ORDER BY record ASC LIMIT $1 OFFSET $2`
 	query = fmt.Sprintf("%s%s%s", query, filterString, orderString)
-	notes, err := r.fetch(query, limit)
+	notes, err := r.fetch(query, limit, offset)
 	return notes, err
 }
 
 func (r *Repository) Post(record *models.Record) (*models.Record, error) {
-	statement := `INSERT INTO records (uuid, record, username, createdDate) VALUES ($1, $2, $3, CURRENT_DATE)`
+	statement := `INSERT INTO records (uuid, record, username, createdDate) VALUES ($1, $2, $3, CURRENT_TIMESTAMP)`
 	_, err := r.dbClient.Exec(statement, record.UUID, record.Record, record.Username)
 	return record, err
 }
 
-func (r *Repository) fetch(query string, limit int64) ([]models.Record, error) {
+func (r *Repository) fetch(query string, limit int64, offset int64) ([]models.Record, error) {
 	var rows *sql.Rows
 	var err error
-	rows, err = r.dbClient.Query(query, limit)
+	rows, err = r.dbClient.Query(query, limit, offset)
 	if err != nil {
 		return nil, err
 	}
