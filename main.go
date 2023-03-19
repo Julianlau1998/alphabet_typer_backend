@@ -37,6 +37,7 @@ func CORSMiddlewareWrapper(next echo.HandlerFunc) echo.HandlerFunc {
 }
 
 func main() {
+
 	startup()
 
 	RecordRepository := records.NewRepository(dbClient)
