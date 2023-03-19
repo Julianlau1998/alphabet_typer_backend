@@ -26,9 +26,8 @@ func startup() {
 func CORSMiddlewareWrapper(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 		dynamicCORSConfig := middleware.CORSConfig{
-			AllowOrigins: []string{"https://alphabet-typer.com", "https://alphabet-typer.netlify.app", "https://app.alphabet-typer.com"},
-			AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
-			AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodOptions},
+			AllowOrigins: []string{"*"},
+			AllowMethods: []string{http.MethodGet, http.MethodHead, http.MethodPut, http.MethodPatch, http.MethodPost, http.MethodDelete},
 		}
 		CORSMiddleware := middleware.CORSWithConfig(dynamicCORSConfig)
 		CORSHandler := CORSMiddleware(next)
