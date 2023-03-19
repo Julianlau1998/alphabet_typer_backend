@@ -51,6 +51,6 @@ func main() {
 	r.GET("/records", RecordDelivery.GetAll)
 	r.POST("/records", RecordDelivery.Post)
 
-	port := "8080"
+	port := "8081"
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", port)))
 }
