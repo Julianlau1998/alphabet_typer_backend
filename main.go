@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
@@ -26,7 +25,7 @@ func startup() {
 func CORSMiddlewareWrapper(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 		dynamicCORSConfig := middleware.CORSConfig{
-			AllowOrigins: []string{"https://alphabet-typer.com", "https://alphabet-typer.netlify.app"},
+			AllowOrigins: []string{"https://alphabet-typer.com", "https://alphabet-typer.netlify.app", "https://app.alphabet-typer.com"},
 			AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 			AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete, http.MethodOptions},
 		}
