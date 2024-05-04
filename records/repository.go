@@ -37,7 +37,7 @@ func (r *Repository) GetAll(limit int64, filter int64, offset int64) ([]models.R
 
 func (r *Repository) Post(record *models.Record) (*models.Record, error) {
 	if record.Record < 1 {
-		return record, err
+		return record, _
 	}
 	statement := `INSERT INTO records (uuid, record, username, createdDate) VALUES ($1, $2, $3, CURRENT_TIMESTAMP)`
 	_, err := r.dbClient.Exec(statement, record.UUID, record.Record, record.Username)
