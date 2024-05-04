@@ -35,13 +35,14 @@ func (r *Repository) GetAll(limit int64, filter int64, offset int64) ([]models.R
 	return notes, err
 }
 
-func (r *Repository) Post(record *models.Record) (*models.Record, err error) {
+func (r *Repository) Post(record *models.Record) (recordReturn *models.Record, err error) {
+	recordReturn = record
 	if record.Record < 1 {
-		return record, _
+		return recordReturn, err
 	}
 	statement := `INSERT INTO records (uuid, record, username, createdDate) VALUES ($1, $2, $3, CURRENT_TIMESTAMP)`
 	_, err = r.dbClient.Exec(statement, record.UUID, record.Record, record.Username)
-	return record, err
+	return recordReturn, err
 }
 
 func (r *Repository) fetch(query string, limit int64, offset int64) ([]models.Record, error) {
