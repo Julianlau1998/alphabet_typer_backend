@@ -6,8 +6,10 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/labstack/echo/v4"
+	"github.com/joho/godotenv"
 	"net/http"
 	"time"
+	"os"
 
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -15,12 +17,19 @@ import (
 var dbClient *sql.DB
 
 func startup() {
+	err := godotenv.Load()
+	if err != nil {
+        fmt.Sprintf("%v", os.Getenv("dbName"))
+    }
 
 	dbClient = utility.NewDbClient()
-	for utility.Migrate(dbClient) != nil {
-		fmt.Printf("Verbindung Fehlgeschlagen, %s", utility.Migrate(dbClient))
-		time.Sleep(20 * time.Second)
-	}
+
+	// ToDo !!Migration currently not working!!
+
+	// for utility.Migrate(dbClient) != nil {
+	// 	fmt.Printf("Verbindung Fehlgeschlagen, %s", utility.Migrate(dbClient))
+	// 	time.Sleep(20 * time.Second)
+	// }
 }
 
 func CORSMiddlewareWrapper(next echo.HandlerFunc) echo.HandlerFunc {
